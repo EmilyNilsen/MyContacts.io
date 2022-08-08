@@ -4,10 +4,11 @@
   "description": "Backend contact list ",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint .",
-    "dev": "nodemon index.js"
+    "dev": "nodemon ."
   },
   "author": "Emily Nilsen Carvalho",
   "license": "ISC",
@@ -17,8 +18,11 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
     "eslint-config-trybe-backend": "^1.0.4",
     "express": "^4.18.1",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.21.3",
     "sequelize-cli": "^6.4.1"
   }
 }
