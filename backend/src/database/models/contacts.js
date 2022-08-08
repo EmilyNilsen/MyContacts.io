@@ -1,5 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
   const  contact = sequelize.define('Contacts', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+    },
     nome: DataTypes.STRING,
     telefone: DataTypes.INTEGER,
     email: DataTypes.STRING,
