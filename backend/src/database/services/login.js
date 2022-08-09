@@ -1,9 +1,15 @@
 const { User } = require('../models');
+const jwtGenerate = require('../utils/jwt');
 
-const login = async ({ email, password }) => {
+const authentication = async ({ email, password }) => {
   const user = await User.findOne({ where: { email, password } });
   if (!user) return null;
-  return user;
+  const response = jwtGenerate(
+    { id: user.id,
+      email: user.email
+    },
+  );
+  return { Token: response };
 }
 
-module.exports = { login };
+module.exports = { authentication };

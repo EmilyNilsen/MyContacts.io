@@ -6,15 +6,15 @@ const listContactsByUserId = async ({ id }) => {
   return contacts;
 }
 
-const cretedNewContact = async ({ nome, telefone, email, UserId}) => {
+const creteNewContact = async ({ nome, telefone, email, userId }) => {
   const contactExist = await Contacts.findOne({ where: { nome, telefone, email } });
   if (contactExist) return null;
 
-  const response = await Contacts.create({ nome, telefone, email, UserId });
+  const response = await Contacts.create({ nome, telefone, email, userId });
 
   const getNewContact = await Contacts.findOne({ where: { id: response.id } })
   if (!getNewContact) return null;
   return getNewContact;
 }
 
-module.exports = { listContactsByUserId, cretedNewContact };
+module.exports = { listContactsByUserId, creteNewContact };

@@ -11,10 +11,11 @@ const listContactsByUserId = async (req, res) => {
   }
 }
 
-const cretedNewContact = async (req, res) => {
+const creteNewContact = async (req, res) => {
   try {
-    const { nome, telefone, email, UserId } = req.body;
-    const response = await contactService.cretedNewContact({ nome, telefone, email, UserId });
+    const { nome, telefone, email } = req.body;
+    const { id } = req.tokenData.id;
+    const response = await contactService.creteNewContact({ nome, telefone, email, id });
     if (!response) {
       return res.status(409).json({ message: 'contact already exist'});
     }
@@ -24,7 +25,8 @@ const cretedNewContact = async (req, res) => {
   }
 }
 
+
 module.exports = {
   listContactsByUserId,
-  cretedNewContact,
+  creteNewContact,
 };
