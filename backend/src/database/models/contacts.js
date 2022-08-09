@@ -1,16 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
   const  contact = sequelize.define('Contacts', {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-    },
     nome: DataTypes.STRING,
-    telefone: DataTypes.INTEGER,
+    telefone: DataTypes.BIGINT,
     email: DataTypes.STRING,
     userId: { type: DataTypes.INTEGER, foreignKey: true },
     data_cadastro: { type: sequelize.fn('now') },
     data_alteração: { type: sequelize.fn('now') },
   }, {
+    createdAt: 'data_cadastro',
+    updatedAt: 'data_alteração',
     timestamps: false,
     tableName: 'contacts',
   });

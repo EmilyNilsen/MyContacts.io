@@ -11,4 +11,20 @@ const listContactsByUserId = async (req, res) => {
   }
 }
 
-module.exports = listContactsByUserId;
+const cretedNewContact = async (req, res) => {
+  try {
+    const { nome, telefone, email, UserId } = req.body;
+    const response = await contactService.cretedNewContact({ nome, telefone, email, UserId });
+    if (!response) {
+      return res.status(409).json({ message: 'contact already exist'});
+    }
+    return res.status(201).end();
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+module.exports = {
+  listContactsByUserId,
+  cretedNewContact,
+};
