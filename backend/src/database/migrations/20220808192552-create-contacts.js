@@ -3,7 +3,6 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('contacts', {
       id: {
-        allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
@@ -12,7 +11,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       telefone: { 
-        type: Sequelize.INTEGER
+        type: Sequelize.BIGINT
       },
       email: { 
         type: Sequelize.STRING
@@ -21,11 +20,9 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       data_cadastro: {
-        allowNull: false,
         type: Sequelize.DATE
       },
       data_alteração: {
-        allowNull: false,
         type: Sequelize.DATE
       }
     });
