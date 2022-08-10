@@ -17,4 +17,11 @@ const creteNewContact = async ({ nome, telefone, email, userId }) => {
   return getNewContact;
 }
 
-module.exports = { listContactsByUserId, creteNewContact };
+
+const updateContact = async ({ id, nome, telefone, email }) => {
+  const contactExist = await Contacts.findOne({ where: { id } });
+  if (!contactExist) return null;
+  return await Contacts.update({ nome: nome, telefone: telefone, email: email }, { where: { id: id } } );
+}
+
+module.exports = { listContactsByUserId, creteNewContact, updateContact };

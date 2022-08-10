@@ -9,7 +9,7 @@ module.exports = {
         email: 'juninhodobairro@email.com',
         userId: 1,
         data_cadastro: new Date('2011-08-01T19:58:51.000Z'),
-        data_alteração: new Date('2011-08-01T19:58:51.000Z'),
+        data_alteracao: new Date('2011-08-01T19:58:51.000Z'),
       },
       {
         nome: 'Padaria da esquina',
@@ -17,7 +17,7 @@ module.exports = {
         email: 'padariapaoquentinhoo@email.com',
         userId: 2,
         data_cadastro: new Date('2011-08-01T19:58:51.000Z'),
-        data_alteração: new Date('2011-08-01T19:58:51.000Z'),
+        data_alteracao: new Date('2011-08-01T19:58:51.000Z'),
       },
     ], {}),
 

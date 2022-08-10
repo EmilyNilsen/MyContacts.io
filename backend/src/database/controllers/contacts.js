@@ -25,8 +25,21 @@ const creteNewContact = async (req, res) => {
   }
 }
 
+const updateContact = async (req, res) => {
+  try {
+    const { id, nome, telefone, email } = req.body;
+    const response = await contactService.updateContact({ id, nome, telefone, email });
+    if (!response) {
+      return res.status(400).json({ message: 'contact dont exists'});
+    }
+    return res.status(200).end();
+  } catch (e) {
+    console.error(e);
+  }
+}
 
 module.exports = {
   listContactsByUserId,
   creteNewContact,
+  updateContact,
 };
