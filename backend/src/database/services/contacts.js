@@ -17,4 +17,9 @@ const creteNewContact = async ({ nome, telefone, email, userId }) => {
   return getNewContact;
 }
 
-module.exports = { listContactsByUserId, creteNewContact };
+
+const updateContact = async ({ id, nome, telefone, email }) => {
+  await Contacts.update({ nome: nome, telefone: telefone, email: email }, { where: { id: id } } );
+}
+
+module.exports = { listContactsByUserId, creteNewContact, updateContact };

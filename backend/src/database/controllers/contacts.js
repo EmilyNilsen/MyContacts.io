@@ -25,8 +25,18 @@ const creteNewContact = async (req, res) => {
   }
 }
 
+const updateContact = async (req, res) => {
+  try {
+    const { id, nome, telefone, email } = req.body;
+    const response = await contactService.updateContact({ id, nome, telefone, email });
+    return res.status(200).json(response);
+  } catch (e) {
+    console.error(e);
+  }
+}
 
 module.exports = {
   listContactsByUserId,
   creteNewContact,
+  updateContact,
 };
