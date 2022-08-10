@@ -17,13 +17,22 @@ module.exports = {
         type: Sequelize.STRING
       },
       userId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id'
+        },
+        onDelete: 'CASCADE',
       },
       data_cadastro: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY,
+        allowNull: false,
+        defaultValue: Sequelize.NOW
       },
-      data_alteração: {
-        type: Sequelize.DATE
+      data_alteracao: {
+        type: Sequelize.DATE,
+        allowNull: true
       }
     });
   },
