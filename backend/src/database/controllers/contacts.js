@@ -2,7 +2,7 @@ const contactService = require('../services/contacts');
 
 const listContactsByUserId = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id } = req.tokenData;
     const response = await contactService.listContactsByUserId({ id });
     return res.status(200).json(response);
   } catch(e) {
@@ -42,7 +42,6 @@ const deleteContact = async (req, res) => {
   try {
     const { id } = req.params;
     const userId = req.tokenData.id;
-    console.log(userId);
     const response = await contactService.deleteContact({ id, userId });
     if (!response) {
       return res.status(400).json({ message: 'contact dont exists'});
