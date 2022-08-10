@@ -14,10 +14,10 @@ const listContactsByUserId = async (req, res) => {
 const creteNewContact = async (req, res) => {
   try {
     const { nome, telefone, email } = req.body;
-    const { id } = req.tokenData.id;
-    const response = await contactService.creteNewContact({ nome, telefone, email, id });
+    const { id } = req.tokenData;
+    const response = await contactService.creteNewContact({ nome, telefone, email, userId: id });
     if (!response) {
-      return res.status(409).json({ message: 'contact already exist'});
+      return res.status(400).json({ message: 'contact already exist'});
     }
     return res.status(201).end();
   } catch (e) {
