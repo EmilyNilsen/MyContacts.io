@@ -6,7 +6,7 @@ const validateToken = require('../src/database/middlewares/validate.jwt');
 
 const contactRouter = express.Router();
 
-contactRouter.get('/list-contacts-by-userId/:id', validateToken, listContactsByUserId);
+contactRouter.get('/list-contacts', validateToken, listContactsByUserId);
 contactRouter.post('/register', validateToken, validateTelefone, validateEmail, creteNewContact);
 contactRouter.put('/update', validateToken, validateTelefone, validateEmail, updateContact);
 contactRouter.delete('/:id', validateToken, deleteContact);
