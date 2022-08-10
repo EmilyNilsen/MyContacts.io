@@ -19,7 +19,7 @@ const updateContact = async ({ id, nome, telefone, email }) => {
 }
 
 const deleteContact = async ({ id, userId }) => {
-  const contactExist = await Contacts.findOne({ where: { id, isActive: true } });
+  const contactExist = await Contacts.findOne({ where: { id, userId: userId, isActive: true } });
   if (!contactExist) return null;
   return await Contacts.update({ isActive: false }, { where: { id: id, userId: userId } });
 }
