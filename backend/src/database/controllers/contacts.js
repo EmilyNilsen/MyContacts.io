@@ -29,7 +29,10 @@ const updateContact = async (req, res) => {
   try {
     const { id, nome, telefone, email } = req.body;
     const response = await contactService.updateContact({ id, nome, telefone, email });
-    return res.status(200).json(response);
+    if (!response) {
+      return res.status(400).json({ message: 'contact dont exists'});
+    }
+    return res.status(200).end();
   } catch (e) {
     console.error(e);
   }
