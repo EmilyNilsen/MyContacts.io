@@ -33,7 +33,11 @@ module.exports = {
       data_alteracao: {
         type: Sequelize.DATE,
         allowNull: true
-      }
+      },
+      isActive: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
