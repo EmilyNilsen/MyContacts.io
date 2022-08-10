@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     userId: { type: DataTypes.INTEGER, foreignKey: true },
     data_cadastro: { type: DataTypes.DATEONLY, allowNull: false, defaultValue: DataTypes.NOW },
     data_alteracao: { type: DataTypes.DATE, allowNull: true },
+    isActive: { type: DataTypes.BOOLEAN, defaultValue: true },
   }, {
     createdAt: 'data_cadastro',
     updatedAt: 'data_alteracao',
