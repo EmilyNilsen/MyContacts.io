@@ -17,7 +17,7 @@ const creteNewContact = async (req, res) => {
     const { id } = req.tokenData;
     const response = await contactService.creteNewContact({ nome, telefone, email, userId: id });
     if (!response) {
-      return res.status(400).json({ message: 'contact already exist'});
+      return res.status(400).json({ message: 'Este contato já existe'});
     }
     return res.status(201).end();
   } catch (e) {
@@ -30,7 +30,7 @@ const updateContact = async (req, res) => {
     const { id, nome, telefone, email } = req.body;
     const response = await contactService.updateContact({ id, nome, telefone, email });
     if (!response) {
-      return res.status(400).json({ message: 'contact dont exists'});
+      return res.status(400).json({ message: 'Este contato não existe'});
     }
     return res.status(200).end();
   } catch (e) {
@@ -44,7 +44,7 @@ const deleteContact = async (req, res) => {
     const userId = req.tokenData.id;
     const response = await contactService.deleteContact({ id, userId });
     if (!response) {
-      return res.status(400).json({ message: 'contact dont exists'});
+      return res.status(400).json({ message: 'Este contato não existe'});
     }
     return res.status(204).end();
   } catch(e) {
