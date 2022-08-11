@@ -1,4 +1,4 @@
-const contactService = require('../services/contacts');
+const contactService = require('../services/contactService');
 
 const listContactsByUserId = async (req, res) => {
   try {

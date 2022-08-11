@@ -1,5 +1,5 @@
 const express = require('express');
-const { listContactsByUserId, creteNewContact, updateContact, deleteContact }  = require('../src/database/controllers/contacts');
+const { listContactsByUserId, creteNewContact, updateContact, deleteContact }  = require('../src/database/controllers/contactController');
 const { validateEmail } = require('../src/database/middlewares/validation.login');
 const { validateTelefone } = require('../src/database/middlewares/validation.contacts');
 const validateToken = require('../src/database/middlewares/validate.jwt');
