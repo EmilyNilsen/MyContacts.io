@@ -5,7 +5,7 @@ module.exports = {
     [
       {
         nome: 'Juninho do Bairro',
-        telefone: 9999999,
+        telefone: 47996005815,
         email: 'juninhodobairro@email.com',
         userId: 1,
         data_cadastro: new Date('2011-08-01T19:58:51.000Z'),

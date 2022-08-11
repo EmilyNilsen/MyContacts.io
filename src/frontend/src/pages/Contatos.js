@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { IoMdContact } from 'react-icons/io';
+import { AiOutlineWhatsApp } from 'react-icons/ai';
 import { requestData } from '../services/api';
 
 export default function Contatos() {
@@ -50,7 +51,14 @@ export default function Contatos() {
                 <td className="name-values">{ nome }</td>
                 <td>{ telefone }</td>
                 <td>{ email }</td>
-                <td className="action-values"> </td>
+                <td className="action-values">
+                  <a
+                    className="icon-values"
+                    href={ `https://api.whatsapp.com/send?phone=${telefone}&text=Olá,%20` }
+                  >
+                    <AiOutlineWhatsApp />
+                  </a>
+                </td>
               </tr>
             </tbody>
           ),
