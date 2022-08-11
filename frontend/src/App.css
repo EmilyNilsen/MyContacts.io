@@ -1,5 +1,14 @@
 .App {
-  text-align: center;
+  padding: 30px;
+  align-items: center;
+  background: #474a48;
+  color: #474a48;
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+  height: 100vh;
+  justify-content: center;
+  width: 100%;
 }
 
 .App-logo {
@@ -35,4 +44,26 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.container-login {
+  color: black;
+  border: 1px solid black;
+  border-radius: 2rem;
+  background-color: #537a5a;
+  padding: 2.5rem;
+}
+
+.icon-login {
+  width: 3rem;
+  height: 3rem;
+  margin-left: 5rem;
+}
+
+.button {
+  width: 100%;
+}
+
+.login-message-fail {
+  color: white;
 }
