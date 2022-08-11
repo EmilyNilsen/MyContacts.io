@@ -1,5 +1,5 @@
 .App {
-  padding: 30px;
+  padding: 15px;
   align-items: center;
   background: #474a48;
   color: #474a48;
@@ -66,4 +66,33 @@
 
 .login-message-fail {
   color: white;
+}
+
+.container-contacts-list {
+  color: white;
+  border: 1px solid black;
+  background-color: #537a5a;
+  text-align: center;
+  width: 100%;
+  margin-top: -30%;
+}
+
+.icon-collumn {
+  width: 1%;
+}
+
+.icon-values {
+  width: 2%;
+}
+
+.action-collumn {
+  width: 15%;
+}
+
+.action-values {
+  width: 15%;
+}
+
+.name-values {
+  text-align: left;
 }

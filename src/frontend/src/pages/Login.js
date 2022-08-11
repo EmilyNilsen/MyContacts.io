@@ -21,12 +21,11 @@ export default function Login() {
   };
 
   const loginHandler = async () => {
-    const response = await requestLogin('/login', { email, password });
-    const okStatusCode = 200;
-    if (response.status === okStatusCode) {
+    try {
+      const response = await requestLogin('/login', { email, password });
       localStorage.setItem('token', response.data.Token.toString());
       redirectTo.push('/home');
-    } else {
+    } catch (e) {
       setLoginFailed(true);
     }
   };

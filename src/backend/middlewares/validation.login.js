@@ -4,6 +4,7 @@ const validateEmail = (req, res, next) => {
     if (!email || email !== undefined && email.length <= 0) {
       return res.status(400).json({ message: 'O campo "Email" não pode estar vazio' });
     }
+    next();
   } catch (e) {
     next(e);
   }
@@ -15,6 +16,7 @@ const validatePassword = (req, res, next) => {
     if (!password || password !== undefined && password.length <= 0) {
       return res.status(400).json({ message: 'O campo "Senha" não pode estar vazio' });
     }
+    next();
   } catch (e) {
     next(e);
   }
