@@ -1,4 +1,4 @@
-const { Contacts } = require('../models');
+const { Contacts } = require('../database/models');
 
 const listContactsByUserId = async ({ id }) => {
   const contacts = await Contacts.findAll({ where: { userId: id, isActive: true }, attributes: { exclude: ['userId', 'UserId','data_cadastro', 'data_alteração', 'isActive'] } });

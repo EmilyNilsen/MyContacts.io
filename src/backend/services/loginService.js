@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User } = require('../database/models');
 const jwtGenerate = require('../utils/jwt');
 
 const authentication = async ({ email, password }) => {
