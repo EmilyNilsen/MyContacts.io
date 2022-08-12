@@ -2,19 +2,29 @@ import React, { useEffect, useState } from 'react';
 import { IoMdContact } from 'react-icons/io';
 import { AiOutlineWhatsApp } from 'react-icons/ai';
 import { BiEditAlt } from 'react-icons/bi';
+import { RiDeleteBin5Line } from 'react-icons/ri';
 import { requestData } from '../services/api';
 
 import ModalContacts from '../components/modalContacts';
+import ModalDelete from '../components/modalDelete';
 
 export default function Contatos() {
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalDeleteVisible, setIsModalDeleteVisible] = useState(false);
   const [selectedContact, setSelectedContact] = useState();
+  const [selectedContactName, setSelectedContactName] = useState();
 
   const showModal = (id) => {
     setIsModalVisible(true);
     setSelectedContact(id);
+  };
+
+  const showModalDelete = (id, nome) => {
+    setIsModalDeleteVisible(true);
+    setSelectedContact(id);
+    setSelectedContactName(nome);
   };
 
   useEffect(() => {
@@ -37,9 +47,7 @@ export default function Contatos() {
   return (
     <table className="table container-contacts-list">
       <thead>
-        <tr>
-          <td className="col"><h2>MyContacts.io</h2></td>
-        </tr>
+        <td className="col"><h2>MyContacts.io</h2></td>
       </thead>
       <thead>
         <tr>
@@ -61,7 +69,7 @@ export default function Contatos() {
                 <td>{ email }</td>
                 <td className="action-values">
                   <a
-                    className="icon-values"
+                    className="icon-values button-whatsapp"
                     href={ `https://api.whatsapp.com/send?phone=${telefone}&text=Olá,%20` }
                   >
                     <AiOutlineWhatsApp />
@@ -81,6 +89,21 @@ export default function Contatos() {
                         contactTelefone={ telefone }
                         contactEmail={ email }
                         onClose={ () => setIsModalVisible(false) }
+                    />)
+                    : null }
+                  <button
+                    type="button"
+                    className="btn btn-link button-delete"
+                    onClick={ () => showModalDelete(id, nome) }
+                  >
+                    <RiDeleteBin5Line />
+                  </button>
+                  { isModalDeleteVisible
+                    ? (<ModalDelete
+                    /* eslint-disable indent */
+                        id={ selectedContact }
+                        contactName={ selectedContactName }
+                        onClose={ () => setIsModalDeleteVisible(false) }
                     />)
                     : null }
                 </td>
