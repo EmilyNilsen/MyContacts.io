@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { IoMdContact } from 'react-icons/io';
 import { AiOutlineWhatsApp } from 'react-icons/ai';
+import { BiEditAlt } from 'react-icons/bi';
 import { requestData } from '../services/api';
+
+import ModalContacts from '../components/modalContacts';
 
 export default function Contatos() {
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedContact, setSelectedContact] = useState();
+
+  const showModal = (id) => {
+    setIsModalVisible(true);
+    setSelectedContact(id);
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -27,11 +37,9 @@ export default function Contatos() {
   return (
     <table className="table container-contacts-list">
       <thead>
-        <td className="col"><h2>Contatos</h2></td>
-        <td className="col"> </td>
-        <td className="col"> </td>
-        <td className="col"> </td>
-        <td className="col"> </td>
+        <tr>
+          <td className="col"><h2>Contatos</h2></td>
+        </tr>
       </thead>
       <thead>
         <tr>
@@ -58,6 +66,22 @@ export default function Contatos() {
                   >
                     <AiOutlineWhatsApp />
                   </a>
+                  <button
+                    className="btn btn-link button-edit"
+                    type="button"
+                    onClick={ () => showModal(id) }
+                  >
+                    <BiEditAlt />
+                  </button>
+                  { isModalVisible
+                    ? (<ModalContacts
+                      id={ selectedContact }
+                      contactName={ nome }
+                      contactTelefone={ telefone }
+                      contactEmail={ email }
+                      onClose={ () => setIsModalVisible(false) }
+                    />)
+                    : null }
                 </td>
               </tr>
             </tbody>
