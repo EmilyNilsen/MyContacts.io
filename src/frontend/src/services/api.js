@@ -17,8 +17,9 @@ export const requestData = async (endpoint, headers) => {
 };
 
 export const updateContact = async (endpoint, body, headers) => {
-  const { data } = await api.put(endpoint, body, headers);
-  return data;
+  api.put(endpoint, body, headers);
 };
+
+export const deleteContact = async (endpoint, headers) => api.delete(endpoint, headers);
 
 export default api;

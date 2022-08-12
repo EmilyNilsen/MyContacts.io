@@ -91,7 +91,25 @@
 }
 
 .action-values {
-  width: 15%;
+  width: 10%;
+  padding-left: 30%;
+}
+
+.button-whatsapp {
+  margin-left: 10%;
+}
+
+.button-edit {
+  background-color: #537a5a;
+  color: white;
+  text-decoration: none;
+}
+
+.button-delete {
+  background-color: #537a5a;
+  color: white;
+  text-decoration: none;
+  padding-left: 0;
 }
 
 .name-values {
@@ -123,8 +141,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* width: 30%;
-  height: 30%; */
   padding: 2.5rem;
 }
 
@@ -136,22 +152,17 @@
   height: 32px;
 }
 
-.button-edit {
-  background-color: #537a5a;
-  color: white;
-  text-decoration: none;
-}
-
-/* .btn-save {
-  width: 40%;
-}
-
-.btn-cancel {
-  width: 40%;
-} */
-
 .edit-modal-button {
   margin-top: 3%;
   display: flex;
   justify-content: space-around;
+}
+
+.delete-modal-button {
+  display: flex;
+  justify-content: space-around;
+}
+
+.delete {
+  margin-top: 10%;
 }
