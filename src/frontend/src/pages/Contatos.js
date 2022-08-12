@@ -38,7 +38,7 @@ export default function Contatos() {
     <table className="table container-contacts-list">
       <thead>
         <tr>
-          <td className="col"><h2>Contatos</h2></td>
+          <td className="col"><h2>MyContacts.io</h2></td>
         </tr>
       </thead>
       <thead>
@@ -75,11 +75,12 @@ export default function Contatos() {
                   </button>
                   { isModalVisible
                     ? (<ModalContacts
-                      id={ selectedContact }
-                      contactName={ nome }
-                      contactTelefone={ telefone }
-                      contactEmail={ email }
-                      onClose={ () => setIsModalVisible(false) }
+                    /* eslint-disable indent */
+                        id={ selectedContact }
+                        contactName={ nome }
+                        contactTelefone={ telefone }
+                        contactEmail={ email }
+                        onClose={ () => setIsModalVisible(false) }
                     />)
                     : null }
                 </td>
