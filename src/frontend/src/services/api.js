@@ -16,4 +16,9 @@ export const requestData = async (endpoint, headers) => {
   return data;
 };
 
+export const updateContact = async (endpoint, body, headers) => {
+  const { data } = await api.put(endpoint, body, headers);
+  return data;
+};
+
 export default api;
