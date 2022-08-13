@@ -13,12 +13,17 @@ export default function Contatos() {
   const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalDeleteVisible, setIsModalDeleteVisible] = useState(false);
-  const [selectedContact, setSelectedContact] = useState();
+  const [selectedContactId, setSelectedContactId] = useState();
   const [selectedContactName, setSelectedContactName] = useState();
+  const [selectedContactPhone, setSelectedContactPhone] = useState();
+  const [selectedContactEmail, setSelectedContactEmail] = useState();
 
-  const showModal = (id) => {
+  const showModal = (id, nome, telefone, email) => {
     setIsModalVisible(true);
-    setSelectedContact(id);
+    setSelectedContactId(id);
+    setSelectedContactName(nome);
+    setSelectedContactPhone(telefone);
+    setSelectedContactEmail(email);
   };
 
   const showModalDelete = (id, nome) => {
@@ -77,17 +82,17 @@ export default function Contatos() {
                   <button
                     className="btn btn-link button-edit"
                     type="button"
-                    onClick={ () => showModal(id) }
+                    onClick={ () => showModal(id, nome, telefone, email) }
                   >
                     <BiEditAlt />
                   </button>
                   { isModalVisible
                     ? (<ModalContacts
                     /* eslint-disable indent */
-                        id={ selectedContact }
-                        contactName={ nome }
-                        contactTelefone={ telefone }
-                        contactEmail={ email }
+                        id={ selectedContactId }
+                        contactName={ selectedContactName }
+                        contactTelefone={ selectedContactPhone }
+                        contactEmail={ selectedContactEmail }
                         onClose={ () => setIsModalVisible(false) }
                     />)
                     : null }
