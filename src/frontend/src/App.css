@@ -1,7 +1,7 @@
 .App {
   padding: 15px;
   align-items: center;
-  background: #474a48;
+  background-color: #474a48;
   color: #474a48;
   display: flex;
   flex-direction: column;
@@ -68,13 +68,28 @@
   color: white;
 }
 
+.container-table {
+  border-color:  #282c34;
+  color: white;
+}
+
 .container-contacts-list {
   color: white;
-  border: 1px solid black;
   background-color: #537a5a;
   text-align: center;
   width: 100%;
-  margin-top: -30%;
+  margin-top: -23.5%;
+}
+
+.container-header-contacts {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1%;
+  margin-bottom: 2%;
+}
+
+.add-contact {
+  margin-left: 69%;
 }
 
 .icon-collumn {
@@ -166,3 +181,4 @@
 .delete {
   margin-top: 10%;
 }
+

@@ -49,34 +49,33 @@ export default function Contatos() {
   }, []);
 
   return (
-    <table className="table container-contacts-list">
-      <thead>
-        <td className="col"><h2>MyContacts.io</h2></td>
-        <td>
-          <button
-            className="btn btn-link button-edit"
-            type="button"
-            onClick={ () => showModal() }
-          >
-            Adicionar Contato
-          </button>
-          { isModalVisible
+    <div className="container-contacts-list">
+      <div className="container-header-contacts">
+        <h2>MyContacts.io</h2>
+        <button
+          className="btn btn-secondary add-contact"
+          type="button"
+          onClick={ () => showModal() }
+        >
+          Adicionar Contato
+        </button>
+        { isModalVisible
             ? (<ModalContacts
                 onClose={ () => setIsModalVisible(false) }
             />)
               : null }
-        </td>
-      </thead>
-      <thead>
-        <tr>
-          <td className="col icon-collumn"> </td>
-          <td className="col name-values">Nome</td>
-          <td className="col">Telefone</td>
-          <td className="col">E-mail</td>
-          <td className="col action-collumn">Ações</td>
-        </tr>
-      </thead>
-      { loading ? <span>loading...</span>
+      </div>
+      <table className="table container-table">
+        <thead>
+          <tr>
+            <td className="col icon-collumn"> </td>
+            <td className="col name-values">Nome</td>
+            <td className="col">Telefone</td>
+            <td className="col">E-mail</td>
+            <td className="col action-collumn">Ações</td>
+          </tr>
+        </thead>
+        { loading ? <span>loading...</span>
         : contacts.map(
           ({ id, nome, telefone, email }) => (
             <tbody key={ id } className="container text-center">
@@ -129,6 +128,7 @@ export default function Contatos() {
             </tbody>
           ),
         )}
-    </table>
+      </table>
+    </div>
   );
 }
