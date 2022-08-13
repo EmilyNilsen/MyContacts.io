@@ -1,9 +1,14 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
-import { updateContact } from '../services/api';
+import { contactRequestTypeEnum, contactRequestRouter } from '../services/api';
 
-export default function Modal(
-  { onClose, id, contactName, contactTelefone, contactEmail },
+export const modalTypeEnum = {
+  Update: 'update',
+  Create: 'create',
+};
+
+export default function ModalContacts(
+  { onClose, id = null, contactName = null, contactTelefone = null, contactEmail = null },
 ) {
   const [disable, setDisable] = useState(true);
   const [nome, setNome] = useState('');
@@ -20,20 +25,30 @@ export default function Modal(
     inputHandler[name](value);
   };
 
-  const getTokenAndUpdateContact = async () => {
-    const token = localStorage.getItem('token');
-    const headers = { headers: { authorization: token } };
-    await updateContact('contacts/update', { id, nome, email, telefone }, headers);
+  const updateContact = async () => {
+    await contactRequestRouter({
+      contactRequestType: contactRequestTypeEnum.UpdateContacts,
+      body: { id, nome, email, telefone },
+    });
   };
 
-  const modalOnClickHandler = async (isUpdate) => {
-    if (!isUpdate) {
-      onClose();
-    } else {
-      await getTokenAndUpdateContact();
-      onClose();
+  const createContact = async () => {
+    await contactRequestRouter({
+      contactRequestType: contactRequestTypeEnum.CreateContacts,
+      body: { nome, email, telefone },
+    });
+  };
+
+  const modalOnClickHandler = async () => {
+    const modalTypeEnumerator = id ? modalTypeEnum.Update : modalTypeEnum.Create;
+    if (modalTypeEnumerator === modalTypeEnum.Create) {
+      await createContact();
+      window.location.reload();
+    } else if (modalTypeEnumerator === modalTypeEnum.Update) {
+      await updateContact();
       window.location.reload();
     }
+    onClose();
   };
 
   useEffect(() => {
@@ -49,7 +64,13 @@ export default function Modal(
     <div className="modal">
       <div className="container-modal">
         <div className="content-modal">
-          <h2>Editar contato</h2>
+          <h2>
+            {
+              id ? 'Editar' : 'Adicionar'
+            }
+            {' '}
+            contatos
+          </h2>
           Nome:
           <input
             name="nome"
@@ -75,7 +96,7 @@ export default function Modal(
             <button
               type="submit"
               className="btn btn-danger btn-cancel"
-              onClick={ () => modalOnClickHandler(false) }
+              onClick={ () => onClose() }
             >
               Cancelar
             </button>
@@ -83,7 +104,7 @@ export default function Modal(
               type="submit"
               disabled={ disable }
               className="btn btn-success btn-save"
-              onClick={ () => modalOnClickHandler(true) }
+              onClick={ () => modalOnClickHandler() }
             >
               Salvar
             </button>
@@ -94,7 +115,7 @@ export default function Modal(
   );
 }
 
-Modal.propTypes = {
+ModalContacts.propTypes = {
   onClose: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
   contactName: PropTypes.string.isRequired,

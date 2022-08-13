@@ -1,22 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { deleteContact } from '../services/api';
+import { contactRequestTypeEnum, contactRequestRouter } from '../services/api';
 
 export default function ModalDelete({ onClose, id, contactName }) {
-  const getTokenAndDeleteContact = async () => {
-    const token = localStorage.getItem('token');
-    const headers = { headers: { authorization: token } };
-    await deleteContact(`/contacts/${id}`, headers);
-  };
-
-  const modalOnClickHandler = async (isUpdate) => {
-    if (!isUpdate) {
-      onClose();
-    } else {
-      await getTokenAndDeleteContact();
-      onClose();
-      window.location.reload();
-    }
+  const modalOnClickHandler = async () => {
+    await contactRequestRouter({
+      contactRequestType: contactRequestTypeEnum.DeleteContacts,
+      contactId: id });
+    onClose();
+    window.location.reload();
   };
 
   return (
@@ -35,14 +27,14 @@ export default function ModalDelete({ onClose, id, contactName }) {
             <button
               type="submit"
               className="btn btn-danger btn-cancel"
-              onClick={ () => modalOnClickHandler(false) }
+              onClick={ () => onClose() }
             >
               Cancelar
             </button>
             <button
               type="submit"
               className="btn btn-success btn-save"
-              onClick={ () => modalOnClickHandler(true) }
+              onClick={ () => modalOnClickHandler() }
             >
               Excluir
             </button>
