@@ -6,20 +6,57 @@ const api = axios.create({
   baseURL: `http://localhost:${PORT}`,
 });
 
-export const requestLogin = async (endpoint, body) => {
-  const response = await api.post(endpoint, body);
+export const contactRequestTypeEnum = {
+  GetUserContacts: 'GetUserContacts',
+  UpdateContacts: 'UpdateContacts',
+  DeleteContacts: 'DeleteContacts',
+  CreateContacts: 'CreateContacts',
+};
+
+const buildHeadersWithToken = () => {
+  const token = localStorage.getItem('token');
+  return { headers: { authorization: token } };
+};
+
+export const requestLogin = async (endpooint, body) => {
+  const response = await api.post(endpooint, body);
   return response;
 };
 
-export const requestData = async (endpoint, headers) => {
-  const { data } = await api.get(endpoint, headers);
+export const getUserContacts = async () => {
+  const { data } = await api.get('/contacts/list-contacts', buildHeadersWithToken());
   return data;
 };
 
-export const updateContact = async (endpoint, body, headers) => {
-  api.put(endpoint, body, headers);
+export const updateContact = async (body) => {
+  api.put('contacts/update', body, buildHeadersWithToken());
 };
 
-export const deleteContact = async (endpoint, headers) => api.delete(endpoint, headers);
+export const deleteContact = async (contactId) => {
+  api.delete(`/contacts/${contactId}`, buildHeadersWithToken());
+};
+
+export const createContact = async (body) => {
+  api.post('contacts/register', body, buildHeadersWithToken());
+};
+
+export async function contactRequestRouter({
+  contactRequestType, contactId, body }) {
+  switch (contactRequestType) {
+  case contactRequestTypeEnum.GetUserContacts:
+    return getUserContacts();
+  case contactRequestTypeEnum.UpdateContacts:
+    await updateContact(body);
+    break;
+  case contactRequestTypeEnum.DeleteContacts:
+    await deleteContact(contactId);
+    break;
+  case contactRequestTypeEnum.CreateContacts:
+    await createContact(body);
+    break;
+  default:
+    break;
+  }
+}
 
 export default api;

@@ -1,9 +1,10 @@
+/* eslint-disable indent */
 import React, { useEffect, useState } from 'react';
 import { IoMdContact } from 'react-icons/io';
 import { AiOutlineWhatsApp } from 'react-icons/ai';
 import { BiEditAlt } from 'react-icons/bi';
 import { RiDeleteBin5Line } from 'react-icons/ri';
-import { requestData } from '../services/api';
+import { contactRequestTypeEnum, contactRequestRouter } from '../services/api';
 
 import ModalContacts from '../components/modalContacts';
 import ModalDelete from '../components/modalDelete';
@@ -18,28 +19,26 @@ export default function Contatos() {
   const [selectedContactPhone, setSelectedContactPhone] = useState();
   const [selectedContactEmail, setSelectedContactEmail] = useState();
 
-  const showModal = (id, nome, telefone, email) => {
-    setIsModalVisible(true);
+  function showModal(id, nome, telefone, email) {
     setSelectedContactId(id);
     setSelectedContactName(nome);
     setSelectedContactPhone(telefone);
     setSelectedContactEmail(email);
-  };
+    setIsModalVisible(true);
+  }
 
   const showModalDelete = (id, nome) => {
     setIsModalDeleteVisible(true);
-    setSelectedContact(id);
+    setSelectedContactId(id);
     setSelectedContactName(nome);
   };
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const token = localStorage.getItem('token');
-
-        const headers = { headers: { authorization: token } };
-
-        const contactsList = await requestData('/contacts/list-contacts', headers);
+        const contactsList = await contactRequestRouter(
+          { contactRequestType: contactRequestTypeEnum.GetUserContacts },
+        );
         setContacts(contactsList);
         setLoading(false);
       } catch (e) {
@@ -53,6 +52,20 @@ export default function Contatos() {
     <table className="table container-contacts-list">
       <thead>
         <td className="col"><h2>MyContacts.io</h2></td>
+        <td>
+          <button
+            className="btn btn-link button-edit"
+            type="button"
+            onClick={ () => showModal() }
+          >
+            Adicionar Contato
+          </button>
+          { isModalVisible
+            ? (<ModalContacts
+                onClose={ () => setIsModalVisible(false) }
+            />)
+              : null }
+        </td>
       </thead>
       <thead>
         <tr>
@@ -82,13 +95,14 @@ export default function Contatos() {
                   <button
                     className="btn btn-link button-edit"
                     type="button"
-                    onClick={ () => showModal(id, nome, telefone, email) }
+                    onClick={ () => {
+                      showModal(id, nome, telefone, email);
+                    } }
                   >
                     <BiEditAlt />
                   </button>
                   { isModalVisible
                     ? (<ModalContacts
-                    /* eslint-disable indent */
                         id={ selectedContactId }
                         contactName={ selectedContactName }
                         contactTelefone={ selectedContactPhone }
@@ -105,8 +119,7 @@ export default function Contatos() {
                   </button>
                   { isModalDeleteVisible
                     ? (<ModalDelete
-                    /* eslint-disable indent */
-                        id={ selectedContact }
+                        id={ selectedContactId }
                         contactName={ selectedContactName }
                         onClose={ () => setIsModalDeleteVisible(false) }
                     />)
