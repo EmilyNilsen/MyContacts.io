@@ -1,9 +1,9 @@
 const { Router } = require('express');
-const loginRouter = require('./login.routes');
 const contactsRouter = require('./contact.routes');
+const userRouter = require('./user.routes');
 
 const routerIndex = Router();
-routerIndex.use('/login', loginRouter);
 routerIndex.use('/contacts', contactsRouter);
+routerIndex.use('/user', userRouter)
 
 module.exports = routerIndex;

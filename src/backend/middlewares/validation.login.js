@@ -1,8 +1,13 @@
+const { EmailIsValid } = require('../utils/emailValidator');
+
 const validateEmail = (req, res, next) => {
   try {
     const { email } = req.body;
     if (!email || email !== undefined && email.length <= 0) {
       return res.status(400).json({ message: 'O campo "Email" não pode estar vazio' });
+    }
+    if (!EmailIsValid(email)) {
+      return res.status(400).json({ message: "E-mail inválido"});
     }
     next();
   } catch (e) {
