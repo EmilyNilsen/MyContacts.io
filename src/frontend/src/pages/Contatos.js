@@ -1,5 +1,6 @@
 /* eslint-disable indent */
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { IoMdContact } from 'react-icons/io';
 import { AiOutlineWhatsApp } from 'react-icons/ai';
 import { BiEditAlt } from 'react-icons/bi';
@@ -9,6 +10,7 @@ import { contactRequestTypeEnum, contactRequestRouter } from '../services/api';
 import ModalContacts from '../components/modalContacts';
 import ModalDelete from '../components/modalDelete';
 
+// eslint-disable-next-line react-hooks/rules-of-hooks
 export default function Contatos() {
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,6 +20,21 @@ export default function Contatos() {
   const [selectedContactName, setSelectedContactName] = useState();
   const [selectedContactPhone, setSelectedContactPhone] = useState();
   const [selectedContactEmail, setSelectedContactEmail] = useState();
+
+  const redirectTo = useHistory();
+
+  function redirectIfUserNotLogged() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      redirectTo.push('/login');
+    }
+  }
+  redirectIfUserNotLogged();
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    redirectTo.push('/login');
+  };
 
   function showModal(id, nome, telefone, email) {
     setSelectedContactId(id);
@@ -64,6 +81,13 @@ export default function Contatos() {
                 onClose={ () => setIsModalVisible(false) }
             />)
               : null }
+        <button
+          type="submit"
+          onClick={ () => logout() }
+          className="btn btn-dark"
+        >
+          Sair
+        </button>
       </div>
       <table className="table container-table">
         <thead>
