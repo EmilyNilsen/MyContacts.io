@@ -51,7 +51,7 @@
   border: 1px solid black;
   border-radius: 2rem;
   background-color: #537a5a;
-  padding: 2.5rem;
+  padding: 3rem;
 }
 
 .icon-login {
@@ -182,3 +182,14 @@
   margin-top: 10%;
 }
 
+.container-login-button {
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.divider-line {
+  text-align: center;
+  border-bottom: 1px solid black;
+}

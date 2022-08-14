@@ -13,14 +13,14 @@ export const contactRequestTypeEnum = {
   CreateContacts: 'CreateContacts',
 };
 
+export const userRequestTypeEnum = {
+  UserLogin: 'UserLogin',
+  UserRegister: 'UserRegister',
+};
+
 const buildHeadersWithToken = () => {
   const token = localStorage.getItem('token');
   return { headers: { authorization: token } };
-};
-
-export const requestLogin = async (endpooint, body) => {
-  const response = await api.post(endpooint, body);
-  return response;
 };
 
 export const getUserContacts = async () => {
@@ -53,6 +53,23 @@ export async function contactRequestRouter({
     break;
   case contactRequestTypeEnum.CreateContacts:
     await createContact(body);
+    break;
+  default:
+    break;
+  }
+}
+
+export const requestLogin = async (body) => api.post('/user/login', body);
+
+export const createUser = async (body) => api.post('/user/register', body);
+
+export async function userRequestRouter(userRequestType, body) {
+  switch (userRequestType) {
+  case userRequestTypeEnum.UserLogin:
+    await requestLogin(body);
+    break;
+  case userRequestTypeEnum.UserRegister:
+    await createUser(body);
     break;
   default:
     break;

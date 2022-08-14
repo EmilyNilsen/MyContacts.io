@@ -1,15 +1,22 @@
+/* eslint-disable indent */
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { RiContactsBookLine } from 'react-icons/ri';
 import { requestLogin } from '../services/api';
+import ModalRegister from '../components/modalRegistro';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [disable, setDisable] = useState(true);
   const [loginFailed, setLoginFailed] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const redirectTo = useHistory();
+
+  function showModal() {
+    setIsModalVisible(true);
+  }
 
   const inputHandler = {
     email: (value) => { setEmail(value); },
@@ -22,7 +29,7 @@ export default function Login() {
 
   const loginHandler = async () => {
     try {
-      const response = await requestLogin('/login', { email, password });
+      const response = await requestLogin({ email, password });
       localStorage.setItem('token', response.data.Token.toString());
       redirectTo.push('/home');
     } catch (e) {
@@ -77,7 +84,7 @@ export default function Login() {
           />
         </label>
       </div>
-      <div className="mb-3">
+      <div className="mb-3 container-login-button">
         <button
           type="submit"
           className="btn btn-dark button"
@@ -86,6 +93,23 @@ export default function Login() {
         >
           Entrar
         </button>
+        <div className="divider-line"> </div>
+        <button
+          type="submit"
+          className="btn btn-dark button"
+          onClick={ showModal }
+        >
+          Criar conta
+        </button>
+        {
+          isModalVisible
+            ? (<ModalRegister
+                email={ email }
+                password={ password }
+                onClose={ () => setIsModalVisible(false) }
+            />)
+            : null
+        }
       </div>
       { loginFailed ? (
         <span className="login-message-fail">
