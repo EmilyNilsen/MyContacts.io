@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const PORT = 3001;
-
+// eslint-disable-next-line no-magic-numbers
+const baseURL = process.env.REACT_APP_SERVER_PORT;
 const api = axios.create({
-  baseURL: `http://localhost:${PORT}`,
+  baseURL,
 });
 
 const buildApiResponseWithStatusCode = ({ data, status = null }) => {

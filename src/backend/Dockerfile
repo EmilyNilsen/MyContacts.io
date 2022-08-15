@@ -1,0 +1,30 @@
+FROM node:alpine
+
+WORKDIR /app
+
+COPY package*.json /
+COPY package-lock.json ./
+
+RUN npm install
+
+COPY ./ ./
+
+ARG DB_HOST
+ENV DB_HOST ${DB_HOST}
+
+ARG DB_USER
+ENV DB_USER ${DB_USER}
+
+ARG DB_PASSWORD
+ENV DB_PASSWORD ${DB_PASSWORD}
+
+ARG DB_NAME
+ENV DB_NAME ${DB_NAME}
+
+ARG DB_PORT
+ENV DB_PORT ${DB_PORT}
+
+ARG JWT_SECRET
+ENV JWT_SECRET ${JWT_SECRET}
+
+ENTRYPOINT ["node", "index.js"]
