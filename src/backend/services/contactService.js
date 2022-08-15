@@ -7,8 +7,6 @@ const listContactsByUserId = async ({ id }) => {
 }
 
 const creteNewContact = async ({ nome, telefone, email, userId }) => {
-  const contactExist = await Contacts.findOne({ where: { userId, isActive: true, nome, telefone, email } });
-  if (contactExist) return null;
   return await Contacts.create({ nome: nome, telefone: telefone, email: email, userId: userId });
 }
 

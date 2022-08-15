@@ -1,18 +1,16 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
+
 import { userRequestTypeEnum, userRequestRouter } from '../services/api';
+import ErrorMessage from './errorMessage';
 
-export const modalTypeEnum = {
-  Update: 'update',
-  Create: 'create',
-};
-
-export default function ModalRegister(
+export default function UserRegisterModal(
   { onClose, email = null, password = null },
 ) {
   const [disable, setDisable] = useState(true);
   const [emailInput, setEmailInput] = useState(email);
   const [passwordInput, setPasswordInput] = useState(password);
+  const [requestErrorList, setRequestErrorList] = useState([]);
 
   const inputHandler = {
     email: (value) => { setEmailInput(value); },
@@ -24,15 +22,20 @@ export default function ModalRegister(
   };
 
   const regiterUser = async () => {
-    await userRequestRouter(
+    const response = await userRequestRouter(
       userRequestTypeEnum.UserRegister,
       { email: emailInput, password: passwordInput },
     );
+    return response;
   };
 
   const modalOnClickHandler = async () => {
-    await regiterUser();
-    onClose();
+    const { apiResponse } = await regiterUser();
+    if (apiResponse.errors.length > 0) {
+      setRequestErrorList(apiResponse.errors);
+    } else {
+      onClose();
+    }
   };
 
   useEffect(() => {
@@ -64,7 +67,7 @@ export default function ModalRegister(
             defaultValue={ password }
             onChange={ (event) => { genericHandler(event); } }
           />
-          <div className="edit-modal-button">
+          <div className="modal-buttons">
             <button
               type="submit"
               className="btn btn-danger btn-cancel"
@@ -76,18 +79,21 @@ export default function ModalRegister(
               type="submit"
               disabled={ disable }
               className="btn btn-success btn-save"
-              onClick={ () => modalOnClickHandler() }
+              onClick={ modalOnClickHandler }
             >
               Salvar
             </button>
           </div>
+          <ErrorMessage
+            requestErrorList={ requestErrorList }
+          />
         </div>
       </div>
     </div>
   );
 }
 
-ModalRegister.propTypes = {
+UserRegisterModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
   password: PropTypes.number.isRequired,

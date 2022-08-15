@@ -9,7 +9,7 @@ const authentication = async ({ email, password }) => {
       email: user.email
     },
   );
-  return { Token: response };
+  return { token: response };
 }
 
 module.exports = { authentication };

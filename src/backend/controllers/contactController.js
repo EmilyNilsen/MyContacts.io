@@ -5,9 +5,9 @@ const listContactsByUserId = async (req, res) => {
   try {
     const { id } = req.tokenData;
     const response = await contactService.listContactsByUserId({ id });
-    return res.status(200).json(defaultApiReturn({ response: response }));
+    return res.status(200).json(defaultApiReturn({ apiResponse: response }));
   } catch(e) {
-    console.error(e);
+    console.error(e.message);
     return res.status(500).json(defaultApiReturn({ error: { message: 'Algo deu errado, tente novamente.' } }));
   }
 }
@@ -20,9 +20,9 @@ const creteNewContact = async (req, res) => {
     if (!response) {
       return res.status(400).json(defaultApiReturn({ error: { message: 'Este contato já existe'} }));
     }
-    return res.status(201).end();
+    return res.status(201).json(defaultApiReturn({}));
   } catch (e) {
-    console.error(e);
+    console.error(e.message);
     return res.status(500).json(defaultApiReturn({ error: { message: 'Algo deu errado, tente novamente.' } }));
   }
 }
@@ -34,9 +34,9 @@ const updateContact = async (req, res) => {
     if (!response) {
       return res.status(400).json(defaultApiReturn({ error: { message: 'Este contato não existe'}}));
     }
-    return res.status(200).end();
+    return res.status(200).json(defaultApiReturn({}));
   } catch (e) {
-    console.error(e);
+    console.error(e.message);
     return res.status(500).json(defaultApiReturn({ error: { message: 'Algo deu errado, tente novamente.' } }));
   }
 }
@@ -49,9 +49,9 @@ const deleteContact = async (req, res) => {
     if (!response) {
       return res.status(400).json(defaultApiReturn({ error: { message: 'Este contato não existe'} }));
     }
-    return res.status(204).end();
+    return res.status(200).json(defaultApiReturn({}));
   } catch(e) {
-    console.error(e);
+    console.error(e.message);
     return res.status(500).json(defaultApiReturn({ error: { message: 'Algo deu errado, tente novamente.' } }));
   }
 }

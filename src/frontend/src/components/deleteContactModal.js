@@ -1,18 +1,25 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import { contactRequestTypeEnum, contactRequestRouter } from '../services/api';
+import ErrorMessage from './errorMessage';
 
 export default function ModalDelete({ onClose, id, contactName }) {
+  const [requestErrorList, setRequestErrorList] = useState([]);
+
   const modalOnClickHandler = async () => {
-    await contactRequestRouter({
+    const { apiResponse } = await contactRequestRouter({
       contactRequestType: contactRequestTypeEnum.DeleteContacts,
       contactId: id });
-    onClose();
-    window.location.reload();
+    if (apiResponse.errors.length > 0) {
+      setRequestErrorList(apiResponse.errors);
+    } else {
+      onClose();
+      window.location.reload();
+    }
   };
 
   return (
-    <div className="modal">
+    <div className="modal modal-delete">
       <div className="container-modal">
         <div className="content-modal delete">
           <h2>Deletar contato</h2>
@@ -39,6 +46,9 @@ export default function ModalDelete({ onClose, id, contactName }) {
               Excluir
             </button>
           </div>
+          <ErrorMessage
+            requestErrorList={ requestErrorList }
+          />
         </div>
       </div>
     </div>
