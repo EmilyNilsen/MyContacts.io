@@ -5,17 +5,19 @@ import { IoMdContact } from 'react-icons/io';
 import { AiOutlineWhatsApp } from 'react-icons/ai';
 import { BiEditAlt } from 'react-icons/bi';
 import { RiDeleteBin5Line } from 'react-icons/ri';
-import { contactRequestTypeEnum, contactRequestRouter } from '../services/api';
 
-import ModalContacts from '../components/modalContacts';
-import ModalDelete from '../components/modalDelete';
+import { contactRequestTypeEnum, contactRequestRouter } from '../services/api';
+import AddContactModal from '../components/addContactModal';
+import EditContactModal from '../components/editContactModal';
+import ModalDelete from '../components/deleteContactModal';
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 export default function Contatos() {
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalEditVisible, setIsModalEditVisible] = useState(false);
   const [isModalDeleteVisible, setIsModalDeleteVisible] = useState(false);
+  const [isModalAddVisible, setIsModalAddVisible] = useState(false);
   const [selectedContactId, setSelectedContactId] = useState();
   const [selectedContactName, setSelectedContactName] = useState();
   const [selectedContactPhone, setSelectedContactPhone] = useState();
@@ -36,12 +38,11 @@ export default function Contatos() {
     redirectTo.push('/login');
   };
 
-  function showModal(id, nome, telefone, email) {
+  function setContactInputValuesToEditModal(id, nome, telefone, email) {
     setSelectedContactId(id);
     setSelectedContactName(nome);
     setSelectedContactPhone(telefone);
     setSelectedContactEmail(email);
-    setIsModalVisible(true);
   }
 
   const showModalDelete = (id, nome) => {
@@ -53,10 +54,10 @@ export default function Contatos() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const contactsList = await contactRequestRouter(
+        const { apiResponse } = await contactRequestRouter(
           { contactRequestType: contactRequestTypeEnum.GetUserContacts },
         );
-        setContacts(contactsList);
+        setContacts(apiResponse.data);
         setLoading(false);
       } catch (e) {
         console.error(e);
@@ -72,13 +73,13 @@ export default function Contatos() {
         <button
           className="btn btn-secondary add-contact"
           type="button"
-          onClick={ () => showModal() }
+          onClick={ () => setIsModalAddVisible(true) }
         >
           Adicionar Contato
         </button>
-        { isModalVisible
-            ? (<ModalContacts
-                onClose={ () => setIsModalVisible(false) }
+        { isModalAddVisible
+            ? (<AddContactModal
+                onClose={ () => setIsModalAddVisible(false) }
             />)
               : null }
         <button
@@ -119,18 +120,19 @@ export default function Contatos() {
                     className="btn btn-link button-edit"
                     type="button"
                     onClick={ () => {
-                      showModal(id, nome, telefone, email);
+                      setContactInputValuesToEditModal(id, nome, telefone, email);
+                      setIsModalEditVisible(true);
                     } }
                   >
                     <BiEditAlt />
                   </button>
-                  { isModalVisible
-                    ? (<ModalContacts
+                  { isModalEditVisible
+                    ? (<EditContactModal
                         id={ selectedContactId }
                         contactName={ selectedContactName }
                         contactTelefone={ selectedContactPhone }
                         contactEmail={ selectedContactEmail }
-                        onClose={ () => setIsModalVisible(false) }
+                        onClose={ () => setIsModalEditVisible(false) }
                     />)
                     : null }
                   <button

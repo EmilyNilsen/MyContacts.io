@@ -2,15 +2,17 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { RiContactsBookLine } from 'react-icons/ri';
-import { requestLogin } from '../services/api';
-import ModalRegister from '../components/modalRegistro';
+
+import { userRequestTypeEnum, userRequestRouter } from '../services/api';
+import ErrorMessage from '../components/errorMessage';
+import UserRegisterModal from '../components/userRegisterModal';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [disable, setDisable] = useState(true);
-  const [loginFailed, setLoginFailed] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [requestErrorList, setRequestErrorList] = useState([]);
 
   const redirectTo = useHistory();
 
@@ -28,12 +30,15 @@ export default function Login() {
   };
 
   const loginHandler = async () => {
-    try {
-      const response = await requestLogin({ email, password });
-      localStorage.setItem('token', response.data.Token.toString());
+  const { apiResponse } = await userRequestRouter(
+    userRequestTypeEnum.UserLogin,
+    { email, password },
+    );
+    if (apiResponse.errors.length > 0) {
+      setRequestErrorList(apiResponse.errors);
+    } else {
+      localStorage.setItem('token', apiResponse.data.token.toString());
       redirectTo.push('/home');
-    } catch (e) {
-      setLoginFailed(true);
     }
   };
 
@@ -103,7 +108,7 @@ export default function Login() {
         </button>
         {
           isModalVisible
-            ? (<ModalRegister
+            ? (<UserRegisterModal
                 email={ email }
                 password={ password }
                 onClose={ () => setIsModalVisible(false) }
@@ -111,11 +116,9 @@ export default function Login() {
             : null
         }
       </div>
-      { loginFailed ? (
-        <span className="login-message-fail">
-          Email ou senha incorreta!
-        </span>
-      ) : null }
+      <ErrorMessage
+        requestErrorList={ requestErrorList }
+      />
     </div>
   );
 }

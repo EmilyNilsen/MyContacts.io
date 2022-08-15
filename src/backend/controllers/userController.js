@@ -6,9 +6,10 @@ const UserController = async (req, res) => {
     const { email, password } = req.body;
     const response = await userService.creteNewUser({ email, password });
     if (!response) return res.status(400).json(defaultApiReturn({ error: { message: 'E-mail já cadastrado'} }));
-    return res.status(201).end();
+    return res.status(201).json(defaultApiReturn({}));
   } catch(e) {
-    console.error(e);
+    console.error(e.message);
+    return res.status(500).json(defaultApiReturn({ error: { message: 'Algo deu errado, tente novamente.' } }));
   }
 }
 

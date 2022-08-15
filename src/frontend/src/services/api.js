@@ -6,16 +6,20 @@ const api = axios.create({
   baseURL: `http://localhost:${PORT}`,
 });
 
+const buildApiResponseWithStatusCode = ({ data, status = null }) => {
+  const apiResponse = {
+    data: data.apiResponse,
+    errors: data.errors,
+    statusCode: status || {},
+  };
+  return { apiResponse };
+};
+
 export const contactRequestTypeEnum = {
   GetUserContacts: 'GetUserContacts',
   UpdateContacts: 'UpdateContacts',
   DeleteContacts: 'DeleteContacts',
   CreateContacts: 'CreateContacts',
-};
-
-export const userRequestTypeEnum = {
-  UserLogin: 'UserLogin',
-  UserRegister: 'UserRegister',
 };
 
 const buildHeadersWithToken = () => {
@@ -24,20 +28,37 @@ const buildHeadersWithToken = () => {
 };
 
 export const getUserContacts = async () => {
-  const { data } = await api.get('/contacts/list-contacts', buildHeadersWithToken());
-  return data;
+  const { data, status } = await api.get(
+    '/contacts/list-contacts',
+    buildHeadersWithToken(),
+  ).catch((e) => e.response);
+  return buildApiResponseWithStatusCode({ data, status });
 };
 
 export const updateContact = async (body) => {
-  api.put('contacts/update', body, buildHeadersWithToken());
+  const { data, status } = await api.put(
+    'contacts/update',
+    body,
+    buildHeadersWithToken(),
+  ).catch((e) => e.response);
+  return buildApiResponseWithStatusCode({ data, status });
 };
 
 export const deleteContact = async (contactId) => {
-  api.delete(`/contacts/${contactId}`, buildHeadersWithToken());
+  const { data, status } = await api.delete(
+    `/contacts/${contactId}`,
+    buildHeadersWithToken(),
+  ).catch((e) => e.response);
+  return buildApiResponseWithStatusCode({ data, status });
 };
 
 export const createContact = async (body) => {
-  api.post('contacts/register', body, buildHeadersWithToken());
+  const { data, status } = await api.post(
+    'contacts/register',
+    body,
+    buildHeadersWithToken(),
+  ).catch((e) => e.response);
+  return buildApiResponseWithStatusCode({ data, status });
 };
 
 export async function contactRequestRouter({
@@ -46,31 +67,37 @@ export async function contactRequestRouter({
   case contactRequestTypeEnum.GetUserContacts:
     return getUserContacts();
   case contactRequestTypeEnum.UpdateContacts:
-    await updateContact(body);
-    break;
+    return updateContact(body);
   case contactRequestTypeEnum.DeleteContacts:
-    await deleteContact(contactId);
-    break;
+    return deleteContact(contactId);
   case contactRequestTypeEnum.CreateContacts:
-    await createContact(body);
-    break;
+    return createContact(body);
   default:
     break;
   }
 }
 
-export const requestLogin = async (body) => api.post('/user/login', body);
+export const userRequestTypeEnum = {
+  UserLogin: 'UserLogin',
+  UserRegister: 'UserRegister',
+};
 
-export const createUser = async (body) => api.post('/user/register', body);
+export const requestLogin = async (body) => {
+  const { data } = await api.post('/user/login', body).catch((e) => e.response);
+  return buildApiResponseWithStatusCode({ data });
+};
+
+export const createUser = async (body) => {
+  const { data } = await api.post('/user/register', body).catch((e) => e.response);
+  return buildApiResponseWithStatusCode({ data });
+};
 
 export async function userRequestRouter(userRequestType, body) {
   switch (userRequestType) {
   case userRequestTypeEnum.UserLogin:
-    await requestLogin(body);
-    break;
+    return requestLogin(body);
   case userRequestTypeEnum.UserRegister:
-    await createUser(body);
-    break;
+    return createUser(body);
   default:
     break;
   }

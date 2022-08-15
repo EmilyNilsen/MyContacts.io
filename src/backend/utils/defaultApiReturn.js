@@ -1,7 +1,7 @@
-const defaultApiReturn = ({ response = null, error = null }) => {
+const defaultApiReturn = ({ apiResponse = null, error = null }) => {
   return {
-    response,
-    errors: [error],
+    apiResponse,
+    errors: error ? [error] : [],
   }
 }
 
