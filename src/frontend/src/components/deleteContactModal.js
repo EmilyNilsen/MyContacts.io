@@ -19,8 +19,8 @@ export default function ModalDelete({ onClose, id, contactName }) {
   };
 
   return (
-    <div className="modal modal-delete">
-      <div className="container-modal">
+    <div className="modal">
+      <div className="container-modal modal-delete">
         <div className="content-modal delete">
           <h2>Deletar contato</h2>
           <p>
