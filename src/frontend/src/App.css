@@ -1,0 +1,205 @@
+.App {
+  padding: 15px;
+  align-items: center;
+  background-color: #474a48;
+  color: #474a48;
+  display: flex;
+  flex-direction: column;
+  font-family: sans-serif;
+  height: 100vh;
+  justify-content: center;
+  width: 100%;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.container-login {
+  color: black;
+  border: 1px solid black;
+  border-radius: 2rem;
+  background-color: #537a5a;
+  padding: 3rem;
+}
+
+.icon-login {
+  width: 3rem;
+  height: 3rem;
+  margin-left: 5rem;
+}
+
+.button {
+  width: 100%;
+}
+
+.login-message-fail {
+  color: white;
+}
+
+.container-table {
+  border-color:  #282c34;
+  color: white;
+}
+
+.container-contacts-list {
+  color: white;
+  background-color: #537a5a;
+  text-align: center;
+  width: 100%;
+  margin-top: -23.5%;
+}
+
+.container-header-contacts {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1%;
+  margin-bottom: 2%;
+}
+
+.add-contact {
+  margin-left: 65%;
+}
+
+.icon-collumn {
+  width: 1%;
+}
+
+.icon-values {
+  width: 2%;
+  color: white;
+}
+
+.action-collumn {
+  width: 15%;
+}
+
+.action-values {
+  width: 10%;
+  padding-left: 30%;
+}
+
+.button-whatsapp {
+  margin-left: 10%;
+}
+
+.button-edit {
+  background-color: #537a5a;
+  color: white;
+  text-decoration: none;
+}
+
+.button-delete {
+  background-color: #537a5a;
+  color: white;
+  text-decoration: none;
+  padding-left: 0;
+}
+
+.name-values {
+  text-align: left;
+}
+
+.modal {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left:0;
+  z-index:10;
+  background-color: rgba(0,0,0,0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-modal {
+  background-color: #fff;
+  color: black;
+  width: 30%;
+  height: 58%;
+  border-radius: 20px;
+}
+
+.modal-delete {
+  height: 48%;
+}
+
+.content-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2.5rem;
+}
+
+.close {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: 32px;
+  height: 32px;
+}
+
+.modal-buttons {
+  margin-top: 5%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.delete-modal-button {
+  display: flex;
+  justify-content: space-around;
+}
+
+.delete {
+  margin-top: 10%;
+}
+
+.container-login-button {
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.divider-line {
+  text-align: center;
+  border-bottom: 1px solid black;
+}
+
+.error-message-component {
+  margin-top: 7%;
+  width: 100%;
+  text-align: center;
+}
